@@ -113,7 +113,11 @@ export class GoTo implements vscode.DefinitionProvider {
     //
 
     if (!this.etags) {
-      const tagsFile = path.join(this.rootPath, 'TAGS');
+      const tagsFileLocation = <string>(
+        (vscode.workspace.getConfiguration('bustagem').get('tagsFileLocation') || 'TAGS')
+      );
+
+      const tagsFile = path.join(this.rootPath, tagsFileLocation);
 
       // rip (can be slow)
       if (!fs.existsSync(tagsFile)) {
